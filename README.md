@@ -43,6 +43,15 @@ Given that your data is ready (you have the correct data frame, format, blah bla
 
 (insert charts and equations)
 
-remark: equation here doens't mean PhD math, instead, it means the following: say I want to say the change of stock price is up and down two percent. The equation version can be the following. Let us denote change of stock price to be $\delta$, and stock price for a company $i$ to be $p_i$. Then, the same sentence above can be expressed as $\delta p_i = \pm 2\%$.
+remark: equation here doens't mean PhD math, instead, it means the following: say I want to say the change of stock price is up and down two percent. The equation version can be the following. Let us denote change of stock price to be $\delta$, and stock price for a company $i$ to be $p_i$. Then, the same sentence above can be expressed as $\delta p_i = \pm 2\%$. (this just means use Latex).
 
 ### Results (Visualization / App)
+
+There are many ways to show results
+- table
+- charts
+- app (this might be more impressive)
+
+## Citation
+
+bibliography (track everything even if it's just a web page)
