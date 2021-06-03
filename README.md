@@ -35,6 +35,8 @@ What is your data? What are you doing with the data? What questions are you answ
 
 ### Algorithm Design
 
+This is the algorithm for Monte Carlo Simulation. Please click [here](https://github.com/skamuju/RL_Market_Research/blob/main/scripts/py/README.md).
+
 Given that your data is ready (you have the correct data frame, format, blah blah), I want to do
 - compute XXX
 - execute rolling windows (because it's time series)
