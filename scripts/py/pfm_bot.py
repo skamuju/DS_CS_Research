@@ -2,6 +2,7 @@
 
 
 from numpy.random import random
+from tensorflow.python.framework.meta_graph import read_meta_graph_file
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -55,39 +56,47 @@ def create_branch(runs, s_mu, s_so, ticker, scale):
 
 #Neural Netowrk Setup and Architecture
 
-data_len = 100
-train_data = []
+# data_len = 100
+# train_data = []
 
-for i in range(data_len):
-    train_data.append(stockData['MSFT']['Adj Close'][i])
+# for i in range(data_len):
+#     train_data.append(stockData['MSFT']['Adj Close'][i])
 
-mean_train = np.mean(train_data)
+# mean_train = np.mean(train_data)
 
-model = keras.Sequential()
-model.add(layers.Embedding(input_dim = data_len, output_dim = 64))
-model.add(layers.LSTM(128))
-model.add(layers.Dense(10))
-model.add(layers.Dense(1, activation = 'sigmoid'))
+# model = keras.Sequential()
+# model.add(layers.Embedding(input_dim = data_len, output_dim = 64))
+# model.add(layers.LSTM(128))
+# model.add(layers.Dense(10))
+# model.add(layers.Dense(1, activation = 'relu'))
 
-model.compile(
-    optimizer = 'adam',
-    loss = 'categorical_crossentropy',
-)
+# model.compile(
+#     optimizer = 'adam',
+#     loss = 'binary_crossentropy',
+# )
 
-model.fit(train_data, epochs = 10)
+# model.fit(train_data, epochs = 10)
 
 if __name__ == "__main__":
 
-    model.summary()
+    # model.summary()
     stock = []
+    num_runs = int(input('Number of runs: '))
 
     for ticker in tickers:
         for price in stockData[ticker]['Adj Close']:
             stock.append(price)
     
     plt.plot(stock, label = "MSFT")
-    create_branch(4, 0, 0.01, 'MSFT', 0.001)
+    create_branch(num_runs, 0, 0.01, 'MSFT', 0.001)
 
     plt.ylabel('Price')
-    plt.legend()
+    # plt.legend()
     plt.show()
+
+"""
+update readme
+change image in 
+
+"""
+
