@@ -7,9 +7,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import date
-import tensorflow as tf
+import tensorflow as tf 
 from tensorflow import keras
-from tensorflow.keras import layers
+from tensorflow.keras import layers, Input
+from tensorflow.keras.models import Sequential
 import random
 
 stockData = {}
@@ -50,12 +51,34 @@ def create_branch(runs, s_mu, s_so, ticker, scale):
     
     for i in range(len(diff_list)):
         if diff_list[i] == min(diff_list):
-            print(i + 1, diff_list)
+            print(i + 1, mu, so, diff_list)
 
-# Rnn = keras.model()
+#Neural Netowrk Setup and Architecture
+
+data_len = 100
+train_data = []
+
+for i in range(data_len):
+    train_data.append(stockData['MSFT']['Adj Close'][i])
+
+mean_train = np.mean(train_data)
+
+model = keras.Sequential()
+model.add(layers.Embedding(input_dim = data_len, output_dim = 64))
+model.add(layers.LSTM(128))
+model.add(layers.Dense(10))
+model.add(layers.Dense(1, activation = 'sigmoid'))
+
+model.compile(
+    optimizer = 'adam',
+    loss = 'categorical_crossentropy',
+)
+
+model.fit(train_data, epochs = 10)
 
 if __name__ == "__main__":
 
+    model.summary()
     stock = []
 
     for ticker in tickers:
