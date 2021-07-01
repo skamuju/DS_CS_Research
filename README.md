@@ -1,13 +1,12 @@
 # DS_CS_Research
 ![alt text](https://github.com/skamuju/RL_Market_Research/blob/main/pics/Screen%20Shot%202021-06-22%20at%2011.13.46%20PM.png)
 
-Resources: Image come from [John Doe](his website)
 
 ## Description
 
 This project is about building a RL protocol in stock market. We assume secondary market. 
 
-Goal: XXXX
+Goal: The goal is to develop a Portfolio Management Model to investigate the efficiacy of Reinforcement Learning in the Stock Market
 
 ## History / Conventional Method / Motivation
 
