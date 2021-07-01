@@ -1,5 +1,5 @@
 # DS_CS_Research
-[[image]](https://github.com/skamuju/RL_Market_Research/blob/main/pics/Screen%20Shot%202021-06-22%20at%2011.13.46%20PM.png)
+![alt text](https://github.com/skamuju/RL_Market_Research/blob/main/pics/Screen%20Shot%202021-06-22%20at%2011.13.46%20PM.png)
 
 Resources: Image come from [John Doe](his website)
 
