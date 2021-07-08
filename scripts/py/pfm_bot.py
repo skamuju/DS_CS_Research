@@ -41,6 +41,9 @@ def create_branch(runs, s_mu, s_so, ticker, scale, xlo, lent):
             mu += scale
         d_returns = calc_returns(mu, so, ticker, lent)
         branch = []
+        if xlo != 0:
+            for i in range(xlo):
+                branch.append(stockData['MSFT']['Adj Close'][i])
         branch.append(stockData['MSFT']['Adj Close'][xlo])
         
         for j in range(len(d_returns)-1):
@@ -50,10 +53,8 @@ def create_branch(runs, s_mu, s_so, ticker, scale, xlo, lent):
         diff_list.append(diff)
         plt.plot(branch, label = "branch: {}, mean: {}".format(i + 1, mu))
     
-    for i in range(len(diff_list)):
-        if diff_list[i] == min(diff_list):
-            print(i + 1, mu, so, diff_list[i])
-            print(diff_list)
+    
+    print(diff_list.index(min(diff_list)) + 1, mu, min(diff_list))
     
     return mu 
 
@@ -69,46 +70,69 @@ def MCTS(runs, s_mu, s_so, splits, ticker, intra_scale, inter_scale):
  
 
 #Neural Network Setup and Architecture
+def RNN(ob_len, ticker, split_ind):
 
-data_len = 100
-train_data = []
+    stock = [1]
+    y_set = []
+    x_set = []
+    x_train = []
+    y_train = []
+    x_test = []
+    y_test = []
+    low = 0
+    hi = ob_len + 1
+    
+    for i in range(len(stockData[ticker]['Adj Close'])):
+        if i != 0:
+            stock.append(stockData[ticker]['Adj Close'][i] / stockData[ticker]['Adj Close'][i-1])
+    
+    for i in range(len(stock)):
+        if i != 0:
+            y_set.append(stock[i])
+        x_set.append(stock[low:hi])
 
-for i in range(data_len):
-    train_data.append(stockData['MSFT']['Adj Close'][i])
+        low += 1
+        hi += 1
+    
+    y_train, y_test = np.array(y_set[:split_ind]), np.array(y_set[split_ind:])
+    x_train, x_test = np.array(x_set[:split_ind]), np.array(x_set[split_ind:])
 
-# mean_train = np.mean(train_data)
+    # # mean_train = np.mean(x_train)
 
-model = keras.Sequential()
-model.add(layers.Embedding(input_dim = data_len, output_dim = 64))
-model.add(layers.LSTM(128))
-model.add(layers.Dense(10))
-model.add(layers.Dense(1, activation = 'relu'))
+    # model = keras.Sequential()
+    # model.add(layers.Embedding(input_dim = len(stock), output_dim = 64))
+    # model.add(layers.LSTM(128))
+    # model.add(layers.Dense(10))
+    # model.add(layers.Dense(1, activation = 'relu'))
 
-model.compile(
-    optimizer = 'adam',
-    loss = 'binary_crossentropy',
-)
+    # model.compile(
+    #     optimizer = 'adam',
+    #     loss = 'binary_crossentropy',
+    # )
 
-model.fit(train_data, epochs = 10)
+    # model.fit(x_train, y_train, epochs = 10)
+    # return model.predict(x_test, y_test)
 
 if __name__ == "__main__":
 
-    # model.summary()
-    stock = []
-    num_runs = int(input('Number of runs: '))
-    num_splits = int(input('Number of generations: '))
+    #model.summary()
+    # stock = []
+    # num_runs = int(input('Number of runs: '))
+    # num_splits = int(input('Number of generations: '))
 
-    for ticker in tickers:
-        for price in stockData[ticker]['Adj Close']:
-            stock.append(price)
+    # for ticker in tickers:
+    #     for price in stockData[ticker]['Adj Close']:
+    #         stock.append(price)
     
-    plt.plot(stock, label = "MSFT")
-    # create_branch(num_runs, 0, 0.01, 'MSFT', 0.001)
-    MCTS(num_runs, 0.0007, 0.01, num_splits, 'MSFT', 0.0001, 0.1)
+    # # create_branch(num_runs, 0, 0.01, 'MSFT', 0.001)
+    # MCTS(num_runs, 0.0007, 0.01, num_splits, 'MSFT', 0.0001, 0.1)
+    # plt.plot(stock, label = "MSFT", color = "green")
 
-    plt.ylabel('Price')
-    plt.legend()
-    plt.show()
+    # plt.ylabel('Price')
+    # plt.legend()
+    # plt.show()
+
+    RNN(10, 'MSFT', 100) 
 
 """
 update readme
