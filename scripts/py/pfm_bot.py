@@ -17,6 +17,7 @@ import random
 stockData = {}
 tickers = ["MSFT"]
 colors = ['red', 'blue', 'orange', 'yellow', 'olive', 'teal']
+tails = []
  
 for ticker in tickers:
     stockData[ticker] = yf.download(ticker, start = '2020-01-01', end = '2021-04-04') 
@@ -44,19 +45,23 @@ def create_branch(runs, s_mu, s_so, ticker, scale, xlo, lent):
         if xlo != 0:
             for i in range(xlo):
                 branch.append(stockData['MSFT']['Adj Close'][i])
-        branch.append(stockData['MSFT']['Adj Close'][xlo])
+        if i == 0:
+         branch.append(stockData['MSFT']['Adj Close'][xlo])
+        else:
+         branch.append(tails[-1])
         
         for j in range(len(d_returns)-1):
             branch.append((branch[-1] * (1 + d_returns[j])))
             diff += abs(stockData['MSFT']['Adj Close'][xlo + j] - branch[j])
-    
+          
+        tails.append(branch[-1])
         diff_list.append(diff)
         plt.plot(branch, label = "branch: {}, mean: {}".format(i + 1, mu))
     
     
     print(diff_list.index(min(diff_list)) + 1, mu, min(diff_list))
     
-    return mu 
+    return mu
 
 def MCTS(runs, s_mu, s_so, splits, ticker, intra_scale, inter_scale):
 
