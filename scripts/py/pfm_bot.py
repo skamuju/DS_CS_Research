@@ -121,21 +121,33 @@ def RNN(ob_len, ticker, split_ind):
 if __name__ == "__main__":
 
     #model.summary()
-    # stock = []
-    # num_runs = int(input('Number of runs: '))
-    # num_splits = int(input('Number of generations: '))
-
-    # for ticker in tickers:
-    #     for price in stockData[ticker]['Adj Close']:
-    #         stock.append(price)
+    Msft = []
+    for price in stockData['MSFT']['Adj Close']:
+        Msft.append(price)
+      
+    Aapl = []
+    for price in stockData['AAPL']['Adj Close']:
+        Aapl.append(price)
+      
+    Tsla = []
+    for price in stockData['TSLA']['Adj Close']:
+        Tsla.append(price)
+      
+    Fb = []
+    for price in stockData['FB']['Adj Close']:
+        Fb.append(price)
+      
+      
+    num_runs = int(input('Number of runs: '))
+    num_splits = int(input('Number of generations: '))
     
-    # # create_branch(num_runs, 0, 0.01, 'MSFT', 0.001)
-    # MCTS(num_runs, 0.0007, 0.01, num_splits, 'MSFT', 0.0001, 0.1)
-    # plt.plot(stock, label = "MSFT", color = "green")
+    # create_branch(num_runs, 0, 0.01, 'MSFT', 0.001)
+    MCTS(num_runs, 0.0007, 0.01, num_splits, 'MSFT', 0.0001, 0.1)
+    plt.plot(stock, label = "MSFT", color = "green")
 
-    # plt.ylabel('Price')
-    # plt.legend()
-    # plt.show()
+    plt.ylabel('Price')
+    plt.legend()
+    plt.show()   
 
     RNN(10, 'MSFT', 100) 
 
